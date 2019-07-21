@@ -1,0 +1,185 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+        <style>
+            body{
+                font-family: 'Inconsolata', monospace;
+                padding: 1rem;
+                margin: 0;
+                padding-top: 2rem;
+            }
+            h1{
+                padding: 1rem;
+                text-align: center;
+            }
+            .main{
+                display: flex;
+                width:100%;
+                flex-wrap: nowrap;
+                flex-direction: column;
+            }
+
+            .control{
+                width: 100%;
+                border-top: 1px solid gray;
+            }
+
+            .actions{
+                width: 100%;
+                text-align: center;
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            .action{
+                padding: 1rem;
+                width: 200px;
+                border-bottom: 1px solid gray;
+                vertical-align: center;
+                font-size: 1.2rem;
+            }
+
+            .action:hover {
+                background-color: lightgray;
+            }
+
+        
+            .live{
+                background-color: green;
+            }
+           
+            .dead{
+                background-color: white;
+            }
+
+
+            .canvas{
+                flex-grow: 3;
+                padding: 1rem;
+            }
+
+            .grid{
+                display: flex;
+            }
+
+            .row{
+                display: flex;
+
+            }
+            .cell{
+                box-sizing: content-box;
+                border: 1px solid gray;
+                height: 3rem;
+                flex-grow: 1;
+            }
+
+
+
+
+        </style>
+
+    </head>
+    <body>
+        <h1>
+            Game of Life
+        </h1>
+        <div class="main">
+            
+            <div class="canvas">
+                <div id="grid"></div>
+            </div>
+            <div class="control">
+                <div class="actions">
+                    <div class="action" id ="step">Step</div>
+                    <div class="action" id ="auto-play">Auto-Play</div>
+                    <div class="action" id = "pause">Pause</div>
+                    <div class="action" id ="reset">Reset Random</div>
+                    <div class="action" id ="clear">Clear</div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const container = document.querySelector('#grid')
+            const cells = document.querySelector("#grid")
+            const actions = document.querySelector(".actions")
+
+            cells.style.cursor = 'pointer';
+
+            const grid = []
+            for(let i=0; i<12; i++){
+                const row = (new Array(12)).fill('live');
+                grid.push(row);
+
+            }
+            localStorage.setItem('data', grid);
+
+
+
+            const render =() =>{
+                let html = '';
+                grid.forEach( row => {
+                html += `<div class ='row'>${row.map(color => `<div class='cell ${color}'></div>`).join('')}</div>`
+                })
+            container.innerHTML = html;
+            }
+
+            render();
+
+
+
+
+            cells.addEventListener("click", (ev) => {
+                    const currentCell = ev.target
+                    const currentRow = currentCell.parentNode
+                    const currentGrid = currentRow.parentNode
+                    const rowIdx = [...currentGrid.children].indexOf(currentRow)
+                    const cellIdx = [...currentRow.children].indexOf(currentCell)
+                    if(currentColor){
+                        grid[rowIdx][cellIdx]= currentColor
+                        localStorage.setItem('data', grid);
+                        console.log(currentCell)
+                        render();
+                    }
+                })
+            
+            actions.addEventListener("click", (ev) => {
+                const currentAction = ev.target.id;
+                console.log(currentAction)
+            
+                if (currentAction === 'step'){
+                    step();
+                }
+                if(currentAction === 'auto-play'){
+                    autoPlay();
+                }
+                if(currentAction === "pause"){
+                    pause();
+                }
+
+                if(currentAction === "reset"){
+                    reset();
+                }
+                render();
+            })
+
+            const step = () => {
+
+            }
+
+            const autoPlay = () => {
+
+            }
+            
+            const pause = () => {     
+            }
+
+            const reset = () => {
+
+            }
+
+            const clear = () => {
+
+            }   
+        </script>
+    </body>
+</html>
